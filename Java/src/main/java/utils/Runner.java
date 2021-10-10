@@ -1,12 +1,20 @@
+package utils;
+
+import airports.Airport;
 import models.MilitaryType;
-import Planes.MilitaryPlane;
-import Planes.PassengerPlane;
-import Planes.Plane;
+import planes.MilitaryPlane;
+import planes.PassengerPlane;
+import planes.Plane;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Runner {
+
+    private static final Logger LOGGER = Logger.getLogger(Runner.class.getName());
+
     static List<Plane> planes = Arrays.asList(
             new PassengerPlane("Boeing-737", 900, 12000, 60500, 164),
             new PassengerPlane("Boeing-737-800", 940, 12300, 63870, 192),
@@ -27,14 +35,10 @@ public class Runner {
     public static void main(String[] args) {
         Airport airport = new Airport(planes);
         Airport militaryAirport = new Airport(airport.getMilitaryPlanes());
-        Airport passengerAirport = new Airport(airport.getPasPl());
-        System.out.println("Military airport sorted by max distance: " + militaryAirport
-                .sortByMaxDistance()
-                .toString());
-        System.out.println("Passenger airport sorted by max speed: " + passengerAirport
-                .sortByMaxSpeed()
-                .toString());
+        Airport passengerAirport = new Airport(airport.getPassengerPlanes());
+        LOGGER.log(Level.ALL, "Military airport sorted by max distance: {}", militaryAirport.sortByMaxDistance());
+        LOGGER.log(Level.ALL, "Passenger airport sorted by max speed: {}", passengerAirport.sortByMaxSpeed());
+        LOGGER.log(Level.ALL, "Plane with max passenger capacity: {}", passengerAirport.getPassengerPlaneWithMaxPassengersCapacity());
 
-        System.out.println("Plane with max passenger capacity: " + passengerAirport.getPassengerPlaneWithMaxPassengersCapacity());
     }
 }
